@@ -8,5 +8,7 @@ jobs:
     steps:
       - name: pull from main
         uses: actions/checkout@v4
-      - name: reboot kiosk
-        run: echo "reboot me"
+      - name: close old kiosk
+        run: kill $(pidof chromium)
+      - name: re open kiosk updated
+        run: chromium --kiosk /home/actions/actions-runner/_work/actions-lab/actions-lab/CampusVisit_Example.html
