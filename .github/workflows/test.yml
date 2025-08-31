@@ -11,4 +11,4 @@ jobs:
       - name: close old kiosk
         run: kill $(pidof chromium)
       - name: re open kiosk updated
-        run: chromium --kiosk /home/actions/actions-runner/_work/actions-lab/actions-lab/CampusVisit_Example.html
+        run: chromium --kiosk /home/actions/actions-runner/_work/actions-lab/actions-lab/CampusVisit_Example.html &
