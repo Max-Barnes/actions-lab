@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Risevision to Video on Keypress -->
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Campus Visit NIC 3rd Floor Vertical</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: black;
+      }
+      #website,
+      #videoContainer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transition: opacity 1s ease-in-out;
+        opacity: 0;
+      }
+      #website {
+        opacity: 1; /* Starts visible */
+      }
+      #videoContainer.visible {
+        opacity: 1;
+      }
+      #website.visible {
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- The website content -->
+    <div id="website">
+      <iframe
+        src="https://widgets.risevision.com/viewer/?type=webplayer&id=KVBXEVSDBFYR"
+        style="border: none; width: 100%; height: 100%"
+      ></iframe>
+    </div>
+
+    <!-- The YouTube video container -->
+    <div id="videoContainer">
+      <div id="player"></div>
+    </div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+      let player;
+
+      // YouTube IFrame API ready function
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player("player", {
+          height: "100%",
+          width: "100%",
+          videoId: "", // Replace with the YouTube video ID
+          playerVars: {
+            autoplay: 1,
+            controls: 0,
+            rel: 0,
+            showinfo: 0,
+            modestbranding: 1,
+          },
+          events: {
+            onReady: onPlayerReady,
+            onStateChange: onPlayerStateChange,
+          },
+        });
+      }
+
+      // When the player is ready, seek to 0 seconds
+      function onPlayerReady(event) {}
+
+      // Detect when the video ends
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.ENDED) {
+          fadeIn("website");
+          fadeOut("videoContainer");
+          player.seekTo(0);
+          player.pauseVideo();
+        }
+      }
+
+      //   Fade in function
+      function fadeIn(elementId) {
+        const element = document.getElementById(elementId);
+        element.classList.toggle("visible");
+      }
+
+      // Fade out function
+      function fadeOut(elementId) {
+        const element = document.getElementById(elementId);
+        element.classList.toggle("visible");
+      }
+
+      // Listen for key press to fade between website and video
+      window.addEventListener("keydown", function (event) {
+        console.log("keydown");
+        let videoId;
+        if (event.key === "ArrowLeft" || event.key === "PageUp") {
+          videoId = "0iIApKlbsiI"; // Replace with the YouTube video ID for the left arrow key
+        } else {
+          videoId = "0iIApKlbsiI"; // Replace with the YouTube video ID for the right arrow key
+        }
+
+        // Load the selected video
+        player.loadVideoById(videoId);
+        player.seekTo(0); // Ensure video starts from the beginning
+
+        // Trigger the fade transition
+        fadeOut("website");
+        fadeIn("videoContainer");
+        // Wait until the fade out transition is complete before playing the video
+        setTimeout(function () {
+          player.playVideo();
+        }, 1000); // Adjust delay as needed to match the transition duration
+      });
+    </script>
+  </body>
+</html>
