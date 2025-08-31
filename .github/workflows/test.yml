@@ -6,9 +6,13 @@ jobs:
     runs-on: [self-hosted]
 
     steps:
+      # this step pulls the latest updates from the repo
       - name: pull from main
         uses: actions/checkout@v4
+      # kills every process chromium is running
       - name: close old kiosk
         run: kill $(pidof chromium)
+        continue-on-error: true
+      # command to create the kiosk. still needs mouse remover
       - name: re open kiosk updated
         run: chromium --kiosk /home/actions/actions-runner/_work/actions-lab/actions-lab/CampusVisit_Example.html &
