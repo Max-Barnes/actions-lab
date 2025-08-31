@@ -3,7 +3,7 @@ run-name: Push to pi
 on: [push]
 jobs:
   Update-To-Latest:
-    runs-on: [self-hosted, raspberry-pi]
+    runs-on: [self-hosted]
 
     steps:
       - name: Git Pull
