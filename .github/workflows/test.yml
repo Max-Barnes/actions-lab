@@ -1,10 +1,11 @@
 name: actions test
-run-name: Push to pi
+run-name: Push to piduction
 on: [push]
 jobs:
   Update-To-Latest:
     runs-on: [self-hosted]
 
     steps:
-      - name: Git Pull
-        run: git pull origin main
+      - uses: actions/checkout@v4
+      - name: reboot kiosk
+      run: echo "reboot me"
